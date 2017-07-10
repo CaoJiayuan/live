@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="renderer" content="webkit">
+    <!-- uc强制竖屏 -->
+    <meta name="screen-orientation" content="portrait">
+    <!-- QQ强制竖屏 -->
+    <meta name="x5-orientation" content="portrait">
+    <!-- UC强制全屏 -->
+    <meta name="full-screen" content="yes">
+    <!-- QQ强制全屏 -->
+    <meta name="x5-fullscreen" content="true">
+    <!-- UC应用模式 -->
+    <meta name="browsermode" content="application">
+    <!-- QQ应用模式 -->
+    <meta name="x5-page-mode" content="app">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+    <title>直播</title>
+    <link href="./node_modules/bootstrap/dist/css/bootstrap.min.css" type="text/css" rel="stylesheet">
+    <link href="./css/jquery.emoji.css" type="text/css" rel="stylesheet">
+    <style>
+        html,
+        body {
+            height: 100vh;
+            overflow: hidden;
+            -webkit-overflow-scrolling: auto;
+        }
+        /*视频开始*/
+
+        .player {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: calc(100vw * 0.5625);
+            overflow: hidden;
+            background-color: #000;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            left: 0;
+        }
+
+        .player iframe {
+            display: block;
+            width: 100%;
+            height: 100vh;
+        }
+        /*视频结束*/
+        /*tab切换*/
+
+        .chat-content {
+            position: fixed;
+            top: calc(100vw * 0.5625);
+            width: 100%;
+            left: 0;
+        }
+
+        .chat-content .nav {
+            border: none;
+            border-bottom: 1px solid #eee;
+            background-color: transparent;
+            position: fixed;
+            top: calc(100vw * 0.5625);
+            left: 0;
+            width: 100%;
+        }
+
+        .nav-tabs>li.active>a,
+        .nav-tabs>li.active>a:focus,
+        .nav-tabs>li.active>a:hover {
+            color: #e1604d;
+            border: none;
+            border-bottom: 2px solid #e1604d;
+        }
+
+        .nav {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .nav li a {
+            padding: 10px;
+            color: #000;
+            border-bottom: 2px solid transparent;
+        }
+
+        .chat-content .nav li {
+            border: none;
+            text-align: center;
+            padding: 0;
+            margin: 0;
+            font-size: 14px;
+            outline: none;
+        }
+
+        .chat-content .nav li p {
+            margin: 0;
+        }
+
+        .tab-content {
+            height: calc(100vh - 100vw * 0.5625 - 90px);
+            position: fixed;
+            top: calc(100vw * 0.5625 + 42px);
+            left: 0;
+            width: 100%;
+        }
+
+        .tab-content .tab-pane {
+            width: 100%;
+            height: 100%;
+        }
+        /*对话列表*/
+
+        .chat-list {
+            background-color: #f5eded;
+            height: calc(100vh - (100vw * 0.5625) - 90px);
+            z-index: 999;
+            overflow: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .chat-list ul {
+            padding: 0 10px;
+            list-style: none;
+        }
+
+        .chat-list ul li {
+            text-align: left;
+            display: block;
+            line-height: 1.5;
+            padding: 5px 0;
+        }
+
+        .chat-list ul li img {
+            width: auto;
+            max-width: 100%;
+        }
+        /*消息输入*/
+
+        .speak {
+            position: fixed;
+            left: 0;
+            bottom: 0;
+            padding: 5px 0px;
+            background-color: #fff;
+            border-top: 1px solid #eee;
+            width: 100vw;
+            z-index: -1;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .speak input {
+            display: inline-block;
+            height: 35px;
+            border-radius: 0;
+            width: 55%;
+            border: 1px solid #e1604d;
+            padding: 0 5px;
+        }
+
+        .speak img {
+            height: 35px;
+            padding-left: 10px;
+            vertical-align: bottom;
+        }
+
+        .speak button {
+            display: inline-block;
+            width: 25%;
+            margin-right: 5px;
+            border-radius: 5px;
+            border: none;
+            background-color: #e1604d;
+            height: 35px;
+            line-height: 35px;
+            margin-left: 5px;
+            color: #fff;
+            vertical-align: bottom;
+        }
+
+        .speak .logout {
+            display: inline-block;
+            margin-right: 10px;
+            padding-left: 0;
+        }
+
+        .thouch-bar {
+            position: fixed;
+            left: 80%;
+            top: 80%;
+            display: block;
+            width: 32px;
+            height: 32px;
+        }
+
+        .thouch-bar img {
+            width: 32px;
+            height: 32px;
+        }
+
+        .tips {
+            position: fixed;
+            bottom: 60px;
+            width: 80%;
+            left: 10%;
+            padding: 10px 5px;
+            text-align: center;
+            color: red;
+            background-color: #fff;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="player">
+        <iframe scrolling="no" src="http://m.huya.com/kaerlol" style="margin-top:-50px;" frameborder="0"></iframe>
+    </div>
+    <div class="chat-content">
+        <ul class="nav nav-tabs">
+            <li class="active"><a href="#chat" data-toggle="tab">聊天 </a></li>
+            <li><a href="#newNotice" data-toggle="tab">最新公告 </a></li>
+            <li><a href="#versions" data-toggle="tab">版权说明 </a></li>
+            <li><a href="#disclaimer" data-toggle="tab">免责声明 </a></li>
+        </ul>
+        <div class="tab-content">
+            <div class="tab-pane fade in active" id="chat">
+
+                <div class="chat-list">
+                    <ul>
+                        <li><label>张三:</label>
+                            <span>。最初是于<img src="./img/banner.png"></span>
+                        </li>
+                        <li><label>张三:</label> 是一个由苹果公司开发和发布的手机操作系统。最初是于</li>
+                        <li><label>张三:</label> 是一个由作系统。最初是于</li>
+                        <li><label>张三:</label> 是一个由苹果公司开发和发布的手机操作系统。最初是于</li>
+                        <li><label>张三:</label> 是一个由苹果公司机操作系统。最初是于</li>
+                        <li><label>张三:</label> 是一个由苹果公司开发和发布的手机操作系统。最初是于</li>
+                        <li><label>张三:</label> 是一个由苹果公司开发和发布的手机操作系统。最初是于</li>
+                        <li><label>张三:</label> 是一个由苹果公司开发和发布的手机操作系统。最初是于</li>
+                        <li><label>张三:</label> 是一个由苹果公司开发和发布的手机操作系统。最初是于</li>
+                        <li><label>张三:</label> 是一个由苹果公司开发和发布的手机操作系统。最初是于</li>
+
+                    </ul>
+                </div>
+                <div id="touchBar" class="thouch-bar">
+                    <img src="./img/logout.png" class="img-responisve" draggable="true" ondragstart="drag(event)" id="drag1" alt="">
+                </div>
+                <div class="tips">
+                    <span>!你发送的消息包含敏感词，不允许发送</span>
+                </div>
+                <div class="speak">
+                    <img class="emoji" src="./img/memoji.png" alt="">
+                    <input id="e-content" type="text" style="display:none">
+                    <input type="text" placeholder="发个言呗。。。。。。">
+                    <button> 发送</button>
+                    <!--<img class="logout" src="./img/logout.png" alt="">-->
+                </div>
+            </div>
+            <div class="tab-pane fade " id="newNotice">
+                <img src="./img/banner.png" class="img-responsive" alt="">
+            </div>
+            <div class="tab-pane fade" id="versions">
+                <p>iOS 是一个由苹果公司开发和发布的手机操作系统。最初是于 2007 年首次发布 iPhone、iPod Touch 和 Apple TV。iOS 派生自 OS X，它们共享 Darwin 基础。OS X 操作系统是用在苹果电脑上，iOS
+                    是苹果的移动版本。 </p>
+            </div>
+            <div class="tab-pane fade" id="disclaimer">
+                <p>jMeter 是一款开源的测试软件。它是 100% 纯 Java 应用程序，用于负载和性能测试。</p>
+            </div>
+        </div>
+    </div>
+
+</body>
+<script src="./node_modules/jquery/dist/jquery.min.js "></script>
+<script src="./node_modules/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.js "></script>
+
+<script src="./node_modules/bootstrap/dist/js/bootstrap.min.js "></script>
+<script src="./js/jquery.emoji.js "></script>
+<script src="https://cdn.bootcss.com/iScroll/5.2.0/iscroll.min.js"></script>
+<script>
+    var myScroll = new IScroll('.chat-list');
+    $('#e-content').emoji({
+        button: '.emoji',
+        showTab: false,
+        animation: 'none',
+        icons: [{
+            name: "表情",
+            path: "./img/emojis/",
+            maxNum: 41,
+            file: ".png",
+            placeholder: "{alias}",
+            alias: {
+                1: "[偷笑]",
+                2: "[傲慢]",
+                3: "[再见]",
+                4: "[冷汗]",
+                5: "[发呆]",
+                6: "[可爱]",
+                7: "[吐]",
+                8: "[呵呵]",
+                9: "[咒骂]",
+                10: "[嘘]",
+                11: "[困]",
+                12: "[大兵]",
+                13: "[大哭]",
+                14: "[害羞]",
+                15: "[尴尬]",
+                16: "[左哼哼]",
+                17: "[差劲]",
+                18: "[得意]",
+                19: "[怒]",
+                20: "[惊恐]",
+                21: "[惊讶]",
+                22: "[抓狂]",
+                23: "[折磨]",
+                24: "[撇嘴]",
+                25: "[擦汗]",
+                26: "[晕]",
+                27: "[流汗]",
+                28: "[流泪]",
+                29: "[爱心]",
+                30: "[疑问]",
+                31: "[白眼]",
+                32: "[睡觉]",
+                33: "[糗大了]",
+                34: "[舔]",
+                35: "[色]",
+                36: "[衰]",
+                37: "[调皮]",
+                38: "[酷]",
+                39: "[闭嘴]",
+                40: "[难过]",
+                41: "[龇牙]",
+            },
+            title: {
+                1: "偷笑",
+                2: "傲慢",
+                3: "再见",
+                4: "冷汗",
+                5: "发呆",
+                6: "可爱",
+                7: "吐",
+                8: "呵呵",
+                9: "咒骂",
+                10: "嘘",
+                11: "困",
+                12: "大兵",
+                13: "大哭",
+                14: "害羞",
+                15: "尴尬",
+                16: "左哼哼",
+                17: "差劲",
+                18: "得意",
+                19: "怒",
+                20: "惊恐",
+                21: "惊讶",
+                22: "抓狂",
+                23: "折磨",
+                24: "撇嘴",
+                25: "擦汗",
+                26: "晕",
+                27: "流汗",
+                28: "流泪",
+                29: "爱心",
+                30: "疑问",
+                31: "白眼",
+                32: "睡觉",
+                33: "糗大了",
+                34: "舔",
+                35: "色",
+                36: "衰",
+                37: "调皮",
+                38: "酷",
+                39: "闭嘴",
+                40: "难过",
+                41: "龇牙",
+            }
+        }]
+    });
+
+    var touchBar = document.getElementById('touchBar');
+    var startX, startY, sX, sY, moveX, moveY;
+    var winW = document.body.offsetWidth;
+    var winH = document.body.offsetHeight;
+    var contW = 32;
+    var contH = 32;
+    touchBar.addEventListener("touchstart", function (e) {
+        startX = e.targetTouches[0].pageX; //获取点击点的X坐标	
+        startY = e.targetTouches[0].pageY; //获取点击点的Y坐标
+        sX = touchBar.offsetLeft; //相对于当前窗口X轴的偏移量
+        sY = touchBar.offsetTop; //相对于当前窗口Y轴的偏移量
+        leftX = startX - sX; //鼠标所能移动的最左端是当前鼠标距div左边距的位置
+        rightX = winW - contW + leftX; //鼠标所能移动的最右端是当前窗口距离减去鼠标距div最右端位置
+        topY = startY - sY; //鼠标所能移动最上端是当前鼠标距div上边距的位置
+        bottomY = winH - contH + topY; //鼠标所能移动最下端是当前窗口距离减去鼠标距div最下端位置		
+    }, false);
+    touchBar.addEventListener("touchmove", function (e) {
+        e.preventDefault();
+        moveX = e.targetTouches[0].pageX; //移动过程中X轴的坐标
+        moveY = e.targetTouches[0].pageY; //移动过程中Y轴的坐标
+        if (moveX < leftX) {
+            moveX = leftX;
+        }
+        if (moveX > rightX) {
+            moveX = rightX;
+        }
+        if (moveY < topY) {
+            moveY = topY;
+        }
+        if (moveY > bottomY) {
+            moveY = bottomY;
+        }
+        touchBar.style.top = moveY + sY - startY + 'px';
+        touchBar.style.left = moveX + sX - startX + 'px';
+    }, false);
+</script>
+
+</html>

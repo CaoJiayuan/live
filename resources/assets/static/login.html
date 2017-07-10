@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="initial-scale=1, maximum-scale=3, minimum-scale=1, user-scalable=no">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>登录</title>
+  <link href="./node_modules/bootstrap/dist/css/bootstrap.min.css" type="text/css" rel="stylesheet">
+  <style>
+    html,
+    body {
+      height: 100%;
+      padding: 0;
+      width: 100%;
+    }
+
+    body {
+      background: url('/img/loginbg.png') no-repeat;
+      background-size: cover;
+      position: relative;
+    }
+
+    .login {
+      width: 100%;
+      max-width: 480px;
+      margin: 0 auto 0;
+      padding: 0 10px;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      -ms-transform: translate(-50%, -50%);
+    }
+
+    .login .center {
+      padding: 0 20px;
+      border: 12px solid rgba(255, 255, 255, .5);
+      border-radius: 10px;
+      background-color: rgba(255, 255, 255, .8);
+    }
+
+
+    .login .center .form-group .form-control {
+      width: 100%;
+      display: inline-block;
+    }
+
+    h3 {
+      margin: 55px 0;
+    }
+
+    .submit {
+      background-color: #6b6485;
+      width: 260px;
+      border-radius: 5px;
+      border: none;
+      color: #fff;
+      height: 46px;
+      line-height: 46px;
+      margin-top: 15px;
+    }
+
+    .form-group {
+      position: relative;
+    }
+
+    .form-group img {
+      position: absolute;
+      left: 14px;
+      top: 8px;
+      width: 25px;
+      z-index: 7;
+    }
+
+    .form-group input {
+      height: 41px;
+      padding-left: 53px;
+    }
+
+    .form-group a {
+      color: #808080;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container-fuild">
+    <div class="login">
+      <div class="center">
+        <h3 class="text-center ">登录账号</h3>
+        <form>
+          <div class="form-group">
+            <img src="/img/loginuser.png">
+            <input type="text" class="form-control" placeholder="请输入手机号码">
+          </div>
+          <div class="form-group">
+            <img src="/img/loginpwd.png">
+            <input type="password" class="form-control" placeholder="请输入手机号码">
+          </div>
+
+          <!--<div class="form-group "><a class="col-xs-offset-9 link" href=" ">忘记密码？</a></div>-->
+
+          <div class="form-group text-center"><button type="submit" class="submit" disabled>立即登录</button></div>
+        </form>
+      </div>
+
+    </div>
+  </div>
+
+</body>
+
+</html>

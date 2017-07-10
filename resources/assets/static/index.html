@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <meta name="viewport" content="initial-scale=1, maximum-scale=3, minimum-scale=1, user-scalable=no">
+  <title>直播</title>
+  <link href="./node_modules/bootstrap/dist/css/bootstrap.min.css" type="text/css" rel="stylesheet">
+  <link href="./node_modules/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.css" type="text/css" rel="stylesheet">
+
+  <link href="./css/index.css" type="text/css" rel="stylesheet">
+</head>
+
+<body>
+  <!--顶部-->
+  <div class="topBar clearfix">
+    <div class="logo pull-left"><img src="./img/logo.png" alt="金生金"></div>
+    <div class="top-right pull-right clearfix ">
+      <!--游客界面-->
+      <!--<span class="login pull-right"><a data-toggle="modal" data-target="#loginModal">会员登录 </a></span>-->
+      <!-- 登陆后 -->
+      <button class="pull-right logout">退出登录 </button>
+      <span class="user pull-right"><label><a data-toggle="modal" data-target="#UcenterModal"><img src="" alt="">张三</a></label></span>
+      <button class="pull-right save-desktop" id="saveDesktop"><img src="./img/desktop.png" alt="">保存到桌面 </button>
+      <button class="pull-right save-desktop" id="changeBg-btn" data-toggle="modal" data-target="#backgroundModal"><img src="./img/bg-btn.png" alt="">背景切换 </button>
+    </div>
+  </div>
+  <div class="center-left">
+    <!--投票-->
+    <div class="vote container-fluid">
+      <div class="vote-title"><img src="./img/vote.png" alt="">参与投票 </div>
+      <div class="vote-center">
+        <ul>
+          <li class="clearfix"><span class="col-xs-4">异界</span><span class="col-xs-3">8000</span><span class="col-xs-5"><button>投票</button></span></li>
+          <li class="clearfix"><span class="col-xs-4">异界</span><span class="col-xs-3">800</span><span class="col-xs-5"><button>投票</button></span></li>
+          <li class="clearfix"><span class="col-xs-4">异界</span><span class="col-xs-3">80</span><span class="col-xs-5"><button>投票</button></span></li>
+          <li class="clearfix"><span class="col-xs-4">异界</span><span class="col-xs-3">8</span><span class="col-xs-5"><button disabled="disabled">已投票</button></span></li>
+        </ul>
+      </div>
+    </div>
+    <!--在线客户-->
+    <div class="user-list">
+      <header><img src="./img/person.png" alt="">在线人数 (99999) </header>
+      <div id="J_userList">
+        <ul>
+          <li class="user-item"><img class="user-img" src="./img/userimg.png" alt=""><span class="user-name">管理员</span></li>
+        </ul>
+        <!--<div class="more text-center">加载更多 </div>-->
+      </div>
+    </div>
+    <!--扫码-->
+    <div class="QRcode container-fluid">
+      <div class="row">
+        <div class="col-xs-6 text-center" data-toggle="modal" data-target="#wechatModal"><img src="./img/er.png" alt="">
+          <p><img src="./img/wechat.png" alt="">微信扫码 </p>
+        </div>
+        <div class="col-xs-6 text-center" data-toggle="modal" data-target="#QQModal"><img src="./img/er.png" alt="">
+          <p><img src="./img/qq.png" alt="">QQ扫码 </p>
+        </div>
+      </div>
+    </div>
+    <!--展开/关闭按钮-->
+  </div>
+  <div class="center-right container-fluid">
+    <div class="player col-xs-7">
+      <!--最新公告-->
+      <div class="notice-m clearfix">
+        <div class="notice-roll clearfix pull-left">
+          <div class="pull-left">公告: <img src="./img/notice-mini.png" alt=""></div>
+          <div class="pull-right">
+            <ul id="noticeList">
+              <li><span>大动肝火</span> <span>aaa</span> <span>b'b'b</span></li>
+            </ul>
+          </div>
+        </div>
+        <span class="refresh pull-right"><button id="J_refresh"><img src="./img/reset.png" alt="">刷新</button></span>
+      </div>
+
+      <!--视频-->
+      <div class="player-center " style="postion:relative;z-index:0">
+        <!--<embed style="postion:relative;z-index:0" width="100%" height="100%" wmode="transparent" src="http://weblbs.yystatic.com/s/54880976/54880976/yycomscene.swf"
+          type="application/x-shockwave-flash" allownetworking="all" allowscriptaccess="always" quality="high" bgcolor="#000"
+          wmode="window" allowfullscreen="allowfullscreen" allowFullScreenInteractive="true"="1" style="z-index: -1;" />-->
+        <!--yy&虎牙-->
+        <!--<embed width="100%" height="100%" allownetworking="all" allowscriptaccess="always" src="http://weblbs.yystatic.com/s/13757650/13757650/yyscene.swf"
+          quality="high" bgcolor="#000" wmode="window" allowfullscreen="true" allowFullScreenInteractive="true" type="application/x-shockwave-flash">-->
+        <!--<object name="flashRoomObj" id="flashRoomObj" type="application/x-shockwave-flash" data="http://hyplayer.dwstatic.com/v3.2_17052605/main.swf"
+          style="visibility: visible;" height="100%" width="100%"><param name="quality" value="high"><param name="bgcolor" value="#000000"><param name="allowScriptAccess" value="always"><param name="allowFullScreen" value="true"><param name="allowFullScreenInteractive" value="true"><param name="wmode" value="opaque"><param name="menu" value="false"><param name="flashvars" value="topSid=40923152&amp;subSid=40923152&amp;eu=1675668259&amp;type=jsscene&amp;_yyAuth=12&amp;rso=&amp;rso_desc=&amp;from=&amp;vappid=10057&amp;gameId=2336&amp;furl=http%3A%2F%2Fwww.huya.com%2Fl&amp;referer=http%3A%2F%2Fwww.huya.com%2F1906922051&amp;ref=allLive/0/70/7&amp;pageFull=1&amp;iSourceType=6&amp;screenType=1&amp;normalpub=1&amp;avatarImg=http://huyaimg.dwstatic.com/avatar/1052/d5/4edf814feb7e5e724beb418af251ff_180_135.jpg"></object>-->
+
+        <!--奥点云-->
+        <!--<div id="play"></div>-->
+        <div class="countdown">
+          <div class="row">
+            <div class="col-xs-4">讲师：xx </div>
+            <div class="col-xs-8">倒计时: 00时00分00秒 </div>
+          </div>
+        </div>
+        <!--版权说明-->
+        <div class="advertisement">
+          <ul id="advertisement" class="nav nav-tabs">
+            <li class="active"><a href="#newNotice" data-toggle="tab">最新公告 </a></li>
+            <li><a href="#versions" data-toggle="tab">版权说明 </a></li>
+            <li><a href="#disclaimer" data-toggle="tab">免责声明 </a></li>
+          </ul>
+          <div class="tab-content">
+            <div class="tab-pane fade in active" id="newNotice">
+              <img src="./img/banner.png" width="100%" height="100%" alt=""></div>
+            <div class="tab-pane fade" id="versions">
+              <p>iOS 是一个由苹果公司开发和发布的手机操作系统。最初是于 2007 年首次发布 iPhone、iPod Touch 和 Apple TV。iOS 派生自 OS X，它们共享 Darwin 基础。OS X 操作系统是用在苹果电脑上，iOS
+                是苹果的移动版本。 </p>
+            </div>
+            <div class="tab-pane fade" id="disclaimer">
+              <p>jMeter 是一款开源的测试软件。它是 100% 纯 Java 应用程序，用于负载和性能测试。</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="chat-cont col-xs-5">
+        <div class="chat-block">
+          <p><img src="./img/person.png" alt="">在线人数（999999）</p>
+          <div id="chat-group">
+            <button id="stop">暂停滚屏</button>
+            <ul>
+              <li class="clearfix">
+                <div class="user-img pull-left"><img src="./img/userimg.png" alt=""></div>
+                <div class="user-desc pull-left">
+                  <div><span class="user-name">麻辣隔壁 </span><span class="data">20:08:59 </span></div>
+                  <div class="chat"> 说 </div>
+                </div>
+              </li>
+              <li class="clearfix">
+                <div class="user-img pull-left"><img src="./img/userimg.png" alt=""></div>
+                <div class="user-desc pull-left">
+                  <div><span class="user-name">麻辣隔壁 </span><span class="data">20:08:59 </span></div>
+                  <div class="chat"> 说水电费第三方第三方第三方 </div>
+                </div>
+              </li>
+              <li class="clearfix">
+                <div class="user-img pull-left"><img src="./img/userimg.png" alt=""></div>
+                <div class="user-desc pull-left">
+                  <div><span class="user-name">麻辣隔壁                  </span><span><img src="./img/pc.png" alt=""></span> <span><img src="./img/mobile.png" alt=""></span>                    <span class="data">20:08:59 </span></div>
+                  <div class="chat"> 说 </div>
+                </div>
+              </li>
+              <li class="clearfix">
+                <div class="user-img pull-left"><img src="./img/userimg.png" alt=""></div>
+                <div class="user-desc pull-left">
+                  <div><span class="user-name">麻辣隔壁 </span><span class="data">20:08:59 </span></div>
+                  <div class="chat"> 说 </div>
+                </div>
+              </li>
+            </ul>
+          </div>
+          <div class="qq-list clearfix">
+            <!--<a target="_blank" href="http://wpa.qq.com/msgrd?v=3&uin=214124984&site=qq&menu=yes"><img border="0" src="http://wpa.qq.com/pa?p=2:214124984:41" alt="点击这里给我发消息" title="点击这里给我发消息"></a>-->
+
+            <div class="qq-item"><img src="./img/qq.png" alt="">QQ交谈 </div>
+            <div class="qq-item"><img src="./img/qq.png" alt="">QQ交谈 </div>
+          </div>
+          <div class="chat-speak">
+            <div class="speak-up clearfix">
+              <button title="表情"><img src="./img/expression.png"></button>
+
+              <label class="chat-img" for="chat-img"><img class="" src="./img/img.png"><input type="file" id="chat-img"></label>
+              <div class="btn-group dropup">
+                <button type="button" class=" dropdown-toggle" data-toggle="dropdown"><img class="" src="./img/robot.png"> 
+              </span>
+            </button>
+                <div class="dropdown-menu" role="menu">
+                  <div class="tooltip-arrow"></div>
+                  <ul>
+                    <li class="active"><img src="./img/userimg.png" alt="">机器人x</li>
+                    <li><img src="./img/userimg.png" alt="">机器人x</li>
+                    <li><img src="./img/userimg.png" alt="">机器人x</li>
+                    <li><img src="./img/userimg.png" alt="">机器人x</li>
+                    <li><img src="./img/userimg.png" alt="">机器人x</li>
+                  </ul>
+                </div>
+
+              </div>
+            </div>
+            <div class="speak-center"><button id="send" class="pull-right">发送</button>
+              <span>(10/400)</span>
+              <div id="editor" contenteditable="true"></div>
+            </div>
+            <!--<p class="login-inside">你已被禁言</p>-->
+          </div>
+        </div>
+
+      </div>
+
+
+
+    </div>
+    <!--个人中心-->
+    <div class="modal fade" id="UcenterModal" tabindex="-1" role="dialog" aria-labelledby="UcenterModal">
+      <div class="modal-dialog modal-lg " role="document">
+        <div class="modal-content ">
+          <div class="modal-header "><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true ">&times;
+          </span></button>
+            <h3 class="modal-title">个人中心</h3>
+          </div>
+          <div class="modal-body ">
+            <div class="container-fluid">
+              <div class="row">
+                <div class="u-center-nav pull-left">
+                  <div class="u-center-header">
+                    <div class="u-center-img"><img src="./img/userimg.png" alt=""></div>
+                    <p class="text-center">隔壁老王</p>
+                    <p class="text-center">等级：<img src="./img/platinum.png" alt=""></p>
+                    <p class="text-center">积分：899</p>
+                  </div>
+                  <ul class="nav nav-tabs nav-stacked ">
+                    <li class="active text-center"><a href="#Uinfo" data-toggle="tab">个人资料 </a></li>
+                    <li class="text-center"><a href="#CPwd" data-toggle="tab">修改密码 </a></li>
+                  </ul>
+                </div>
+                <div class="u-center-right pull-right">
+                  <div class="tab-content">
+                    <div class="tab-pane fade in active" id="Uinfo">
+                      <form class="form-horizontal">
+                        <div class="form-group"><label class="col-sm-2 control-label">当前头像:</label>
+                          <div class="col-sm-10"><img id="uCenterImg" src='./img/userimg.png'><label class="select-img-btn" for="selectImg">编辑头像</label><input
+                              type="file" id="selectImg" onchange="previewFile()" /></div>
+                        </div>
+                        <div class="form-group"><label for="uCenterName" class="col-sm-2 control-label">昵称:</label>
+                          <div class="col-sm-10"><input class="form-row input-text" type="text"></div>
+                        </div>
+                        <div class="form-group"><label class="col-sm-2 control-label">手机号码:</label>
+                          <div class="col-sm-10"><span class="form-row">13123451123</span></div>
+                        </div>
+                        <div class="form-group"><label class="col-sm-2 control-label">客户经理:</label>
+                          <div class="col-sm-10"><span class="form-row">隔壁的</span></div>
+                        </div>
+                        <div class="form-group">
+                          <div class="col-sm-offset-2 col-sm-10"><button class="btn save">保存</button><button class="btn cancel">取消</button></div>
+                        </div>
+                      </form>
+                    </div>
+                    <div class="tab-pane fade in " id="CPwd">
+                      <form class="form-horizontal">
+                        <div class="form-group"><label for="uCenterName" class="col-sm-2 control-label">原密码:</label>
+                          <div class="col-sm-10"><input class="form-row input-text" type="password"></div>
+                        </div>
+                        <div class="form-group"><label for="uCenterName" class="col-sm-2 control-label">新密码:</label>
+                          <div class="col-sm-10"><input class="form-row input-text" type="password"></div>
+                        </div>
+                        <div class="form-group"><label for="uCenterName" class="col-sm-2 control-label">确认密码:</label>
+                          <div class="col-sm-10"><input class="form-row input-text" type="password"></div>
+                        </div>
+                        <div class="form-group">
+                          <div class="col-sm-offset-2 col-sm-10"><button class="btn save">保存</button><button class="btn cancel">取消</button></div>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--切换背景-->
+    <div class="modal fade" id="backgroundModal" tabindex="-1" role="dialog" aria-labelledby="backgroundModal">
+      <div class="modal-dialog modal-lg" style="postion:relative;z-index:999" role="document">
+        <div class="modal-content " style="postion:relative;z-index:999">
+          <div class="modal-header ">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true ">&times;
+          </span></button>
+            <h3 class="modal-title ">切换背景</h3>
+          </div>
+          <div class="modal-body container-fluid">
+            <ul class="bg-list row">
+              <li class=" col-xs-4"><img src="./img/bg.jpeg" alt=""></li>
+              <li class="bg-active col-xs-4"><img src="./img/timg.jpeg" alt=""></li>
+              <li class="col-xs-4"><img src="./img/bg.jpeg" alt=""></li>
+              <li class="col-xs-4"><img src="./img/bg.jpeg" alt=""></li>
+              <li class="col-xs-4"><img src="./img/bg.jpeg" alt=""></li>
+              <li class="col-xs-4"><img src="./img/bg.jpeg" alt=""></li>
+              <li class="col-xs-4"><img src="./img/bg.jpeg" alt=""></li>
+              <li class="col-xs-4"><img src="./img/bg.jpeg" alt=""></li>
+            </ul>
+          </div>
+          <div class=" modal-footer"><button type="button" data-dismiss="modal">取消</button><button id="saveBg" type="button">保存</button></div>
+        </div>
+      </div>
+    </div>
+    <!--qq二维码 -->
+    <div class="modal fade" id="QQModal" tabindex="-1" role="dialog" aria-labelledby="QQModal">
+      <div class="modal-dialog modal-md" role="document">
+        <div class="modal-content ">
+          <div class="modal-header "><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true ">&times;
+            </span></button>
+            <h3 class="modal-title ">
+              <img src="./img/qq.png ">QQ扫码</h3>
+          </div>
+          <div class="modal-body ">
+            <img src="./img/er.png" alt="">
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--wechat二维码 -->
+    <div class="modal fade" id="wechatModal" tabindex="-1" role="dialog" aria-labelledby="wechatModal">
+      <div class="modal-dialog modal-md" role="document">
+        <div class="modal-content ">
+          <div class="modal-header "><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true ">&times;
+      </span></button>
+            <h3 class="modal-title ">
+              <img src="./img/wechat.png ">微信扫码</h3>
+          </div>
+          <div class="modal-body ">
+            <img src="./img/er.png" alt="">
+          </div>
+        </div>
+      </div>
+    </div>
+</body>
+<script src="./node_modules/.3.2.1@jquery/dist/jquery.min.js "></script>
+<script src="./node_modules/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.js "></script>
+
+<script src="./node_modules/bootstrap/dist/js/bootstrap.min.js "></script>
+<script src="./node_modules/jqPaginator/dist/1.2.0/jqPaginator.min.js "></script>
+<script src="./js/scroll.js "></script>
+<script src="main.js "></script>
+<script type="text/javascript" src="http://cdn.aodianyun.com/lss/aodianplay/player.js"></script>
+
+</html>

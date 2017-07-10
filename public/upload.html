@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8" />
+  <meta charset="UTF-8">
+  <title>Upload</title>
+</head>
+<body>
+<input type="file" id="file">
+<button id="btn-upload"></button>
+</body>
+<script src="/js/jquery-1.8.0.min.js"></script>
+<script src="/js/ajaxfileupload.js"></script>
+<script>
+  window.jQuery = $;
+
+  function openFile() {
+    document.getElementById('file').click();
+  }
+  $('#file').change(function () {
+    jQuery.ajaxFileUpload({
+      url : '/upload/img',
+      fileElementId : 'file',
+      dataType : 'json',
+      success : window.parent.handleUpload,
+      error : window.parent.handleUploadErr,
+    })
+  })
+</script>
+</html>
